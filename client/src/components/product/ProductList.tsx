@@ -9,10 +9,14 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import styled from "styled-components"
 import Modal from "../shared/Modal"
+import Loader from "../shared/Loader"
 
 const ProductList = () => {
-  const { data: products, isSuccess: isSuccessGetProducts } =
-    useGetAllProductsQuery()
+  const {
+    data: products,
+    isSuccess: isSuccessGetProducts,
+    isLoading,
+  } = useGetAllProductsQuery()
   const [deleteProduct, { isError, isSuccess }] = useDeleteProductMutation()
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const navigate = useNavigate()
@@ -35,6 +39,7 @@ const ProductList = () => {
   return (
     <div>
       <h2>Lista Produktów</h2>
+      {isLoading && <Loader />}
       {isSuccessGetProducts && products.length === 0 ? (
         <p>No products</p>
       ) : (
@@ -98,7 +103,7 @@ const ListItem = styled.li`
   }
 `
 const Flex = styled.div`
-display: flex;
+  display: flex;
 `
 const ListItemBtn = styled.button<{ $delete?: boolean }>`
   border: #ccc;
