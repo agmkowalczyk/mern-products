@@ -11,4 +11,23 @@ const getAllProducts = async (_: Request, res: Response) => {
   }
 }
 
-export { getAllProducts }
+const createProduct = async (req: Request, res: Response) => {
+  try {
+    const { name, price, stock, prodDate, category, description } = req.body
+
+    const newProduct = await Product.create({
+      name,
+      price,
+      stock,
+      prodDate,
+      category,
+      description,
+    })
+
+    res.status(200).json(newProduct)
+  } catch (error: any) {
+    res.status(400).json({ message: error.message })
+  }
+}
+
+export { getAllProducts, createProduct }

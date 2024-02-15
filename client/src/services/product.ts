@@ -16,9 +16,17 @@ export const productApi = createApi({
       providesTags: result =>
         result ? result.map(({ _id }) => ({ type: "Products", _id })) : [],
     }),
-  })
+    addProduct: build.mutation<Product, Partial<Product>>({
+      query: body => {
+        return {
+          url: "/products/add",
+          method: "POST",
+          body,
+        }
+      },
+      invalidatesTags: (result, error, { _id }) => [{ type: "Products", _id }],
+    }),
+  }),
 })
 
-export const {
-  useGetAllProductsQuery,
-} = productApi
+export const { useGetAllProductsQuery, useAddProductMutation } = productApi

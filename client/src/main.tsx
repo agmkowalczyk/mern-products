@@ -6,6 +6,7 @@ import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import "./index.css"
 import RootLayout from "./RootLayout"
 import ProductList from "./components/ProductList"
+import AddProduct from "./components/AddProduct"
 
 const container = document.getElementById("root")
 
@@ -25,6 +26,10 @@ if (container) {
           path: "/products",
           index: true,
           element: <ProductList />,
+        },
+        {
+          path: "/products/add",
+          element: <AddProduct />,
         },
       ],
     },
