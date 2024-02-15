@@ -67,4 +67,19 @@ const editProduct = async (req: Request, res: Response) => {
   }
 }
 
-export { getAllProducts, createProduct, getProduct, editProduct }
+const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const { id: _id } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(_id))
+      return res.status(404).send(`Id ${_id} is not valid`)
+
+    await Product.findByIdAndDelete({ _id })
+
+    res.status(200).json('Product deleted')
+  } catch (error: any) {
+    res.status(400).json({ message: error.message })
+  }
+}
+
+export { getAllProducts, createProduct, getProduct, editProduct, deleteProduct }
