@@ -1,19 +1,39 @@
 import React from "react"
 import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
-import App from "./App"
 import { store } from "./app/store"
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import "./index.css"
+import RootLayout from "./RootLayout"
+import ProductList from "./components/ProductList"
 
 const container = document.getElementById("root")
 
 if (container) {
   const root = createRoot(container)
 
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <RootLayout />,
+      children: [
+        {
+          path: "/",
+          element: <Navigate to="/products" />,
+        },
+        {
+          path: "/products",
+          index: true,
+          element: <ProductList />,
+        },
+      ],
+    },
+  ])
+
   root.render(
     <React.StrictMode>
       <Provider store={store}>
-        <App />
+        <RouterProvider router={router} />
       </Provider>
     </React.StrictMode>,
   )
