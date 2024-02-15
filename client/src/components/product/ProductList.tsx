@@ -1,12 +1,17 @@
-import { useState } from "react"
-import { useDeleteProductMutation, useGetAllProductsQuery } from "../../services/product"
+import { useEffect, useState } from "react"
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+} from "../../services/product"
 import { Product } from "../../types"
 import ProductDetails from "./ProductDetails"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 const ProductList = () => {
-  const { data: products, isSuccess } = useGetAllProductsQuery()
-    const [deleteProduct] = useDeleteProductMutation()
+  const { data: products, isSuccess: isSuccessGetProducts } =
+    useGetAllProductsQuery()
+  const [deleteProduct, { isError, isSuccess }] = useDeleteProductMutation()
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const navigate = useNavigate()
 
@@ -16,10 +21,19 @@ const ProductList = () => {
     }
   }
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Produkt usunięty")
+    }
+    if (isError) {
+      toast.error("Wystąpił błąd")
+    }
+  }, [isSuccess, isError])
+
   return (
     <div>
       <h2>Lista Produktów</h2>
-      {isSuccess && products.length === 0 ? (
+      {isSuccessGetProducts && products.length === 0 ? (
         <p>No products</p>
       ) : (
         <ul>
