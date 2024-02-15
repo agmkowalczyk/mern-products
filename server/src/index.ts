@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 
 import connectDB from './mongodb/connect'
+import productRouter from './routes/product.routes'
 
 dotenv.config()
 
@@ -17,6 +18,8 @@ app.use(bodyParser.json())
 app.get('/', (_: Request, res: Response) => {
   res.send({ message: 'Hello' })
 })
+
+app.use('/api/v1/products', productRouter)
 
 const startServer = async () => {
   try {
