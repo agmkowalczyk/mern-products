@@ -1,9 +1,11 @@
+import { useState } from "react"
 import { useGetAllProductsQuery } from "../services/product"
 import { Product } from "../types"
 import ProductDetails from "./ProductDetails"
 
 const ProductList = () => {
   const { data: products, isSuccess } = useGetAllProductsQuery()
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
 
   const handleDelete = () => {}
 
@@ -16,7 +18,7 @@ const ProductList = () => {
         <ul>
           {products?.map(product => (
             <li key={product._id}>
-              <span>
+              <span onClick={() => setSelectedProduct(product)}>
                 {product.name}
               </span>
               <button onClick={() => {}}>Edytuj</button>
@@ -25,6 +27,8 @@ const ProductList = () => {
           ))}
         </ul>
       )}
+
+      {selectedProduct && <ProductDetails product={selectedProduct} />}
     </div>
   )
 }
