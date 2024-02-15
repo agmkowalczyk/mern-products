@@ -5,8 +5,9 @@ import { store } from "./app/store"
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import "./index.css"
 import RootLayout from "./RootLayout"
-import ProductList from "./components/ProductList"
-import AddProduct from "./components/AddProduct"
+import ProductList from "./components/product/ProductList"
+import AddProduct from "./components/product/AddProduct"
+import EditProduct from "./components/product/EditProduct"
 
 const container = document.getElementById("root")
 
@@ -30,6 +31,10 @@ if (container) {
         {
           path: "/products/add",
           element: <AddProduct />,
+        },
+        {
+          path: "/products/:id/edit",
+          element: <EditProduct />,
         },
       ],
     },

@@ -1,12 +1,14 @@
 import { useState } from "react"
-import { useGetAllProductsQuery } from "../services/product"
-import { Product } from "../types"
+import { useGetAllProductsQuery } from "../../services/product"
+import { Product } from "../../types"
 import ProductDetails from "./ProductDetails"
+import { useNavigate } from "react-router-dom"
 
 const ProductList = () => {
   const { data: products, isSuccess } = useGetAllProductsQuery()
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-
+  const navigate = useNavigate()
+  
   const handleDelete = () => {}
 
   return (
@@ -21,7 +23,9 @@ const ProductList = () => {
               <span onClick={() => setSelectedProduct(product)}>
                 {product.name}
               </span>
-              <button onClick={() => {}}>Edytuj</button>
+              <button onClick={() => navigate(`/products/${product._id}/edit`)}>
+                Edytuj
+              </button>
               <button onClick={() => handleDelete()}>Usuń</button>
             </li>
           ))}

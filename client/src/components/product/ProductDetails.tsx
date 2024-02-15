@@ -1,5 +1,5 @@
-import { Product } from "../types"
-import { formatPrice, parseDate } from "../utils"
+import { Product } from "../../types"
+import { formatPrice, parseDate } from "../../utils"
 
 const ProductDetails = ({ product }: { product: Product }) => {
   return (
