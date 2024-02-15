@@ -8,6 +8,7 @@ import ProductDetails from "./ProductDetails"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import styled from "styled-components"
+import Modal from "../shared/Modal"
 
 const ProductList = () => {
   const { data: products, isSuccess: isSuccessGetProducts } =
@@ -56,7 +57,15 @@ const ProductList = () => {
         </List>
       )}
 
-      {selectedProduct && <ProductDetails product={selectedProduct} />}
+      {selectedProduct && (
+        <Modal
+          title="Szczegóły produktu"
+          isOpen={!!selectedProduct._id}
+          onClose={() => setSelectedProduct(null)}
+        >
+          <ProductDetails product={selectedProduct} />
+        </Modal>
+      )}
     </div>
   )
 }
