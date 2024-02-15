@@ -7,6 +7,7 @@ import { Product } from "../../types"
 import ProductDetails from "./ProductDetails"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
+import styled from "styled-components"
 
 const ProductList = () => {
   const { data: products, isSuccess: isSuccessGetProducts } =
@@ -36,19 +37,23 @@ const ProductList = () => {
       {isSuccessGetProducts && products.length === 0 ? (
         <p>No products</p>
       ) : (
-        <ul>
+        <List>
           {products?.map(product => (
-            <li key={product._id}>
+            <ListItem key={product._id}>
               <span onClick={() => setSelectedProduct(product)}>
                 {product.name}
               </span>
-              <button onClick={() => navigate(`/products/${product._id}/edit`)}>
+              <ListItemBtn
+                onClick={() => navigate(`/products/${product._id}/edit`)}
+              >
                 Edytuj
-              </button>
-              <button onClick={() => handleDelete(product._id)}>Usuń</button>
-            </li>
+              </ListItemBtn>
+              <ListItemBtn onClick={() => handleDelete(product._id)} $delete>
+                Usuń
+              </ListItemBtn>
+            </ListItem>
           ))}
-        </ul>
+        </List>
       )}
 
       {selectedProduct && <ProductDetails product={selectedProduct} />}
@@ -57,3 +62,40 @@ const ProductList = () => {
 }
 
 export default ProductList
+
+const List = styled.ul`
+  background: #fff;
+`
+const ListItem = styled.li`
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  background: #e3f4f4;
+  font-size: 1rem;
+  margin-bottom: 1px;
+
+  &:hover {
+    background: #d2e9e9;
+  }
+
+  display: flex;
+  justify-content: space-between;
+
+  & > :first-child {
+    cursor: pointer;
+    display: flex;
+    flex: 1;
+  }
+`
+const ListItemBtn = styled.button<{ $delete?: boolean }>`
+  border: #ccc;
+  background: ${props => (props.$delete ? "#D14D72" : "#73A9AD")};
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+  color: #fff;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.2);
+  }
+`
