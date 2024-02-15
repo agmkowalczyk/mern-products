@@ -19,7 +19,7 @@ const AddProduct = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Produkt utworzony")
+      toast.success("Produkt dodany")
       navigate("/")
     }
     if (isError) {
