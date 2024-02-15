@@ -44,14 +44,16 @@ const ProductList = () => {
               <span onClick={() => setSelectedProduct(product)}>
                 {product.name}
               </span>
-              <ListItemBtn
-                onClick={() => navigate(`/products/${product._id}/edit`)}
-              >
-                Edytuj
-              </ListItemBtn>
-              <ListItemBtn onClick={() => handleDelete(product._id)} $delete>
-                Usuń
-              </ListItemBtn>
+              <Flex>
+                <ListItemBtn
+                  onClick={() => navigate(`/products/${product._id}/edit`)}
+                >
+                  Edytuj
+                </ListItemBtn>
+                <ListItemBtn onClick={() => handleDelete(product._id)} $delete>
+                  Usuń
+                </ListItemBtn>
+              </Flex>
             </ListItem>
           ))}
         </List>
@@ -95,6 +97,9 @@ const ListItem = styled.li`
     flex: 1;
   }
 `
+const Flex = styled.div`
+display: flex;
+`
 const ListItemBtn = styled.button<{ $delete?: boolean }>`
   border: #ccc;
   background: ${props => (props.$delete ? "#D14D72" : "#73A9AD")};
@@ -103,6 +108,7 @@ const ListItemBtn = styled.button<{ $delete?: boolean }>`
   margin-left: 10px;
   cursor: pointer;
   color: #fff;
+  max-height: 2em;
 
   &:hover {
     background: rgba(0, 0, 0, 0.2);
